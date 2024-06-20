@@ -1,7 +1,7 @@
 // import styles from './AuthForm.module.scss';
 import { MouseEventHandler, useState } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { signin } from '../../store/slices/authSlice';
+import { setCredentials } from '../../store/slices/authSlice';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
@@ -32,11 +32,11 @@ const AuthForm: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     alert(JSON.stringify(data));
 
-    dispatch(signin(data));
+    // dispatch(setCredentials(data));
 
     reset();
 
-    navigate('/');
+    // navigate('/');
   };
 
   const handleTogglePassword: MouseEventHandler = (e) => {
