@@ -1,10 +1,10 @@
-import styles from './AuthForm.module.scss';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Icon } from 'react-icons-kit';
-// import { eyeOff } from 'react-icons-kit/feather/eyeOff';
-// import { eye } from 'react-icons-kit/feather/eye';
-import { eyeOff, eye } from 'react-icons-kit/feather';
+// import styles from './AuthForm.module.scss';
+import { MouseEventHandler, useState } from 'react';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { signin } from '../../store/slices/authSlice';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 
 interface FormValues {
   first_name: string;
@@ -14,8 +14,10 @@ interface FormValues {
 }
 
 const AuthForm: React.FC = () => {
-  const [type, setType] = useState('password');
-  const [icon, setIcon] = useState(eyeOff);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [isVisiblePassword, setisVisiblePassword] = useState(false);
+  const [isVisibleConfirmPassword, setisVisibleConfirmPassword] = useState(false);
 
   const {
     register,
@@ -27,21 +29,25 @@ const AuthForm: React.FC = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     alert(JSON.stringify(data));
 
+    dispatch(signin(data));
+
     reset();
+
+    navigate('/');
   };
 
-  const handleToggle = () => {
-    if (type === "password") {
-      setIcon(eye);
-      setType("text");
-    } else {
-      setIcon(eyeOff);
-      setType("password");
-    }
+  const handleTogglePassword: MouseEventHandler = (e) => {
+    e.preventDefault();
+    setisVisiblePassword(!isVisiblePassword);
   };
+
+  const handleToggleConfirmPassword: MouseEventHandler = (e) => {
+    e.preventDefault();
+    setisVisibleConfirmPassword(!isVisibleConfirmPassword);
+  }
 
   return (
     <div>
@@ -80,7 +86,8 @@ const AuthForm: React.FC = () => {
           <label>
             Пароль
             <input 
-              type="password" 
+              // type="password" 
+              type={!isVisiblePassword ? 'password' : 'text'}
               placeholder='******'
               {...register('password', {
                 required: 'Поле обязательно к заполнению',
@@ -98,29 +105,35 @@ const AuthForm: React.FC = () => {
                 // }
               })}
             />
-            <span onClick={handleToggle}>
-              <Icon icon={icon} size={25} />
-            </span>
+            <button onClick={handleTogglePassword}>
+              {isVisiblePassword ? <FaRegEye /> : <FaRegEyeSlash />}
+            </button>
             <div>{errors?.password && <p>{errors.password.message}</p>}</div>
           </label>
         </div>
 
-        <label>
-          Подтвердите Пароль
-          <input 
-            type="password" 
-            placeholder='******'
-            {...register('confirm_password', {
-              required: 'Подтвердите пароль',
-              validate: (val: string) => {
-                if (watch('password') != val) {
-                  return 'Ваши пароли не совпадают'
+        <div>
+          <label>
+            Подтвердите Пароль
+            <input 
+              // type="password" 
+              type={!isVisibleConfirmPassword ? 'password' : 'text'}
+              placeholder='******'
+              {...register('confirm_password', {
+                required: 'Подтвердите пароль',
+                validate: (val: string) => {
+                  if (watch('password') != val) {
+                    return 'Ваши пароли не совпадают'
+                  }
                 }
-              }
-            })}
-          />
-        </label>
-        <div>{errors?.confirm_password && <p>{errors.confirm_password.message}</p>}</div>
+              })}
+            />
+          </label>
+          <button onClick={handleToggleConfirmPassword}>
+            {isVisibleConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+          </button>
+          <div>{errors?.confirm_password && <p>{errors.confirm_password.message}</p>}</div>
+        </div>
 
         <input type="submit" disabled={!isValid} value="Зарегистрироваться" />
       </form>

@@ -1,4 +1,4 @@
-# React + TypeScript + Redux Toolkit (RTQ and Persist) Vite
+# React + TypeScript + Redux Toolkit (RTK Query and Persist) + Vite
 
 Тестовое задание на позицию стажера Frontend разработчика 
 
