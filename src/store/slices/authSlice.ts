@@ -5,7 +5,7 @@ import type { RootState } from "../intex";
 
 type AuthState = {
   user: User | null;
-  token: string | null;
+  // token: string | null;
 }
 
 const slice = createSlice({
@@ -15,14 +15,29 @@ const slice = createSlice({
     setCredentials: (
       state,
       {
-        payload: { user, token },
-      } : PayloadAction<{user: User, token: string}>,
+        payload: { user },
+      } : PayloadAction<{user: User}>,
     ) => {
       state.user = user;
-      state.token = token;
     },
   },
 });
+
+// const slice = createSlice({
+//   name: 'auth',
+//   initialState: { user: null, token: null} as AuthState,
+//   reducers: {
+//     setCredentials: (
+//       state,
+//       {
+//         payload: { user, token },
+//       } : PayloadAction<{user: User, token: string}>,
+//     ) => {
+//       state.user = user;
+//       state.token = token;
+//     },
+//   },
+// });
 
 export const { setCredentials } = slice.actions;
 

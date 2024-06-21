@@ -6,7 +6,7 @@ import HomePage from "./pages/homePage/HomePage";
 import PersonPage from "./pages/personPage/PersonPage";
 import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
 
-import { RequireAuth } from "./hoc/RequireAuth";
+// import { RequireAuth } from "./hoc/RequireAuth";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,22 +17,49 @@ const router = createBrowserRouter(
         <Route 
           index 
           element={
-            <RequireAuth>
+
               <HomePage />
-            </RequireAuth>
+
           }
         />
         <Route
           path="users/:id"
           element={
-            <RequireAuth>
+
               <PersonPage />
-            </RequireAuth>
+
           }
         />
       </Route>
     </Route>
   )
 );
+
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     <Route>
+//       <Route index path='/signup' element={<AuthPage />} />
+//       <Route path="/*" element={<NotFoundPage />} />
+//       <Route path="/" element={<Layout />}>
+//         <Route 
+//           index 
+//           element={
+//             <RequireAuth>
+//               <HomePage />
+//             </RequireAuth>
+//           }
+//         />
+//         <Route
+//           path="users/:id"
+//           element={
+//             <RequireAuth>
+//               <PersonPage />
+//             </RequireAuth>
+//           }
+//         />
+//       </Route>
+//     </Route>
+//   )
+// );
 
 export default router;

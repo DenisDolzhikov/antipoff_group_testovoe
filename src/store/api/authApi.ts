@@ -1,10 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../intex";
 
+// export interface User {
+//   first_name: string;
+//   last_name: string;
+// };
+
 export interface User {
   first_name: string;
-  last_name: string;
-};
+  email: string;
+}
 
 export interface UserResponse {
   user: User;

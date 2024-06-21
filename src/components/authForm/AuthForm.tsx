@@ -5,6 +5,9 @@ import { setCredentials } from '../../store/slices/authSlice';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../store/api/authApi';
+import type { LoginRequest } from '../../store/api/authApi';
+import type { User } from '../../store/api/authApi';
 
 interface FormValues {
   first_name: string;
@@ -18,6 +21,11 @@ const AuthForm: React.FC = () => {
   const navigate = useNavigate();
   const [isVisiblePassword, setisVisiblePassword] = useState(false);
   const [isVisibleConfirmPassword, setisVisibleConfirmPassword] = useState(false);
+  const [formState, setFormState] = useState<LoginRequest>({
+    username: '',
+    password: '',
+  })
+  const [login, { isLoading }] = useLoginMutation();
 
   const {
     register,
@@ -30,13 +38,24 @@ const AuthForm: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
 
-    // dispatch(setCredentials(data));
+    // // dispatch(setCredentials(data));
 
-    reset();
+    // reset();
 
-    // navigate('/');
+    // // navigate('/');
+      const user = {
+        user: {
+          first_name: data.first_name,
+          email: data.email
+        }
+      };
+      console.log(user);
+
+      dispatch(setCredentials(user));
+      navigate('/');
+
   };
 
   const handleTogglePassword: MouseEventHandler = (e) => {
