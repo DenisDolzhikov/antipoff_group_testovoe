@@ -1,0 +1,27 @@
+.logoutButton {
+  color: #F8F8F8;
+  background: none;
+  border: 1px solid #F8F8F8;
+  border-radius: 8px;
+  padding: 8px 16px 8px 16px;
+  width: 81px;
+  transition: 0.3s;
+  cursor: pointer;
+
+  @media(max-width: 1000px) {
+    text-align: center;
+    border: none;
+    border-radius: 0;
+    padding: 8px 16px 8px 16px;
+    width: 20px;
+  }
+
+  &:hover {
+    background: #ffffff;
+    color: #000000;
+  }
+}
+
+.logoutSVG {
+  
+}

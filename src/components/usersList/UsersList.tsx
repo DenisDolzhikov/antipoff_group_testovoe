@@ -2,11 +2,13 @@ import styles from './UsersList.module.scss';
 import { useState } from 'react';
 import { useListUsersQuery } from '../../store/api/usersListApi';
 import { Link } from 'react-router-dom';
-import { MdArrowBack, MdArrowForward, MdBook } from 'react-icons/md';
+import { MdArrowBack, MdArrowForward } from 'react-icons/md';
+import LikeSVG from '../../assets/like.svg?react';
 
 
 const UsersList: React.FC = () => {
   const [page, setPage] = useState(1);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const { data: users, isLoading, isFetching } = useListUsersQuery(page);
 
   if (isLoading) {
@@ -16,32 +18,62 @@ const UsersList: React.FC = () => {
   if (!users?.data) {
     return <div>No users...</div>
   }
+
+  const handeLike = (e) => {
+    e.preventDefault();
+    setIsLiked(!isLiked);
+  }
   
   return (
-    <div>
-      <h1>HomePage</h1>
+    <div className={styles.usersList}>
 
-      {users?.data.map(({ id, first_name, last_name }) => (
-        <div key={id}>
-          <Link to={`/users/${id}`}>
-            {first_name} {last_name}
-          </Link>
+      <div className={styles.usersListWrapper}>
+
+        <div className={styles.users}>
+
+          {users?.data.map(({ id, first_name, last_name, avatar }) => (
+            <Link to={`/users/${id}`} key={id} className={styles.userContainer}>
+              <div className={styles.userContainerWrapper}>
+                <div className={styles.userAvatarContainer}>
+                  <img src={avatar} alt="avatar" className={styles.userAvatar} />
+                </div>
+                <p>{first_name} {last_name}</p>
+                <button 
+                  className={styles.likeButtonContainer}
+                  onClick={handeLike}
+                >
+                  <LikeSVG 
+                    className={`${styles.likeButton} ${isLiked ? styles.likeButtonActive : ''}`} 
+                    
+                  />
+                </button>
+              </div>
+            </Link>
+          ))}
+          
         </div>
-      ))}
 
-      <button 
-        onClick={() => setPage((prev) => prev - 1)}
-        disabled={page === 1}
-      >
-        <MdArrowBack />
-      </button>
-      <button 
-        onClick={() => setPage((prev) => prev + 1)}
-        disabled={page === users.total_pages} 
-      >
-        <MdArrowForward />
-      </button>
-      <div>{`${page} / ${users.total_pages}`}</div>
+        <div className={styles.paganationContainer}>
+          <button 
+            onClick={() => setPage((prev) => prev - 1)}
+            disabled={page === 1}
+            className={styles.paginationButton}
+          >
+            <MdArrowBack />
+          </button>
+
+          <div className={styles.paginationPagesCount}>{`${page} / ${users.total_pages}`}</div>
+
+          <button 
+            onClick={() => setPage((prev) => prev + 1)}
+            disabled={page === users.total_pages} 
+            className={styles.paginationButton}
+          >
+            <MdArrowForward />
+          </button>
+          
+        </div>
+      </div>
     </div>
   )
 };

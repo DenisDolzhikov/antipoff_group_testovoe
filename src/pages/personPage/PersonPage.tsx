@@ -1,12 +1,21 @@
-import { useNavigate, useParams } from 'react-router-dom';
 import styles from './PersonPage.module.scss';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Breadcrumbs from '../../components/breadcrumbs/Breadcrumbs';
 
+interface UserData {
+  first_name: string;
+  last_name: string;
+  avatar: string;
+}
+
+interface User {
+  data: UserData;
+}
+
 const PersonPage: React.FC = () => {
   const {id} = useParams();
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User>(null);
 
   useEffect(() => {
     fetch(`https://reqres.in/api/users/${id}`)

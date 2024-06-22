@@ -1,0 +1,142 @@
+.usersList {
+  display: flex;
+  margin-top: 60px;
+}
+
+.usersListWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.users {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  min-width: 100%;
+  // padding: 0 20px;
+}
+
+.userContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 3 - 13px);
+  padding: 36px 0 36px 0;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transition: 0.3s;
+  margin-bottom: 18px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #000000;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px 0px;
+
+    .userAvatar {
+      transform: scale(1.2);
+    }
+  }
+
+  @media (max-width: 1000px) {
+    width: calc(100% / 2 - 13px);
+  }
+
+  @media (max-width: 800px) {
+    width: calc(100%);
+  }
+}
+
+.userContainerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userAvatarContainer {
+  display: flex;
+  overflow: hidden;
+  height: 124px;
+  width: 124px;
+  border-radius: 50%;
+}
+
+.userAvatar {
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  transition: transform 0.3s;
+
+  // &:hover {
+  //   transform: scale(1.2);
+  // }
+}
+
+.likeButtonContainer {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 28px;
+  background: #F8F8F8;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+  z-index: 1;
+
+  &:hover > .likeButton {
+      fill: #8737f0;
+    }
+}
+
+.likeButton {
+  width: 14px;
+  height: 12px;
+  transition: fill 0.3s ease;
+}
+
+.likeButtonActive {
+  fill: #512689;
+}
+
+.paganationContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paginationButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0;
+  width: 50px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  transition: 0.3s;
+  cursor: pointer;
+  border: 1px solid #151317;
+
+  &:hover:not([disabled]) {
+    background: #000;
+    color: #ffffff;
+  }
+}
+
+.paginationButton:disabled {
+  background: #d6d6d6;
+  border: 1px solid #bbb7b7
+}
+
+.paginationPagesCount {
+  margin: 0 12px;
+}

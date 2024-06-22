@@ -3,9 +3,7 @@ import AuthForm from '../../components/authForm/AuthForm';
 
 const AuthPage: React.FC = () => {
   return (
-    <div>
-      <h1>AuthPage</h1>
-
+    <div className={styles.authPage}>
       <AuthForm />
     </div>
   )

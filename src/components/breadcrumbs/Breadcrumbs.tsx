@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Breadcrumbs.module.scss';
 import { useLocation, Link } from 'react-router-dom';
 
-const Breadcrumbs = () => {
+const Breadcrumbs: React.FC = () => {
   const { pathname } = useLocation();
   const pathParts = pathname.split("/").filter(Boolean);
 

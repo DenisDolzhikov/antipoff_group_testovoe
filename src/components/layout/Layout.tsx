@@ -8,7 +8,7 @@ interface Porps {
 
 const Layout: React.FC<Porps> = ({ children }) => {
   return (
-    <div>Layout
+    <div>
       <Outlet />
       <LogoutButton />
     </div>

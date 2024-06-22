@@ -1,24 +1,25 @@
-import { Navigate } from "react-router-dom";
+import styles from './LogoutButton.module.scss';
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { logout } from "../../store/slices/authSlice";
+import React from 'react';
+import { useMediaQuery } from 'usehooks-ts'
+import LogoutSVG from '../../assets/logout.svg?react';
 
-const LogoutButton = () => {
+interface Props {
+  className?: string
+}
+
+const LogoutButton: React.FC<Props> = ({ className }) => {
   const dispatch = useAppDispatch();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-
-    dispatch(logout());
-
-    Navigate('/');
-  }
+  const matches = useMediaQuery('(min-width: 1000px)');
 
   return (
-    <div>
-      <button onClick={() => dispatch(logout())}>
-        Выйти
+      <button 
+        className={`${styles.logoutButton} ${className}`}
+        onClick={() => dispatch(logout())}
+      >
+        {matches ? 'Выход' : <LogoutSVG className={styles.logoutSVG} />}
       </button>
-    </div>
   )
 }
 

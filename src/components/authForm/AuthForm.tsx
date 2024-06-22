@@ -1,14 +1,10 @@
-// import styles from './AuthForm.module.scss';
+import styles from './AuthForm.module.scss';
 import { MouseEventHandler, useState } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setCredentials } from '../../store/slices/authSlice';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../store/api/authApi';
-import type { LoginRequest } from '../../store/api/authApi';
-import type { User } from '../../store/api/authApi';
-import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAuth } from '../../hooks/useAuth';
 
 
@@ -24,11 +20,6 @@ const AuthForm: React.FC = () => {
   const navigate = useNavigate();
   const [isVisiblePassword, setisVisiblePassword] = useState(false);
   const [isVisibleConfirmPassword, setisVisibleConfirmPassword] = useState(false);
-  const [formState, setFormState] = useState<LoginRequest>({
-    username: '',
-    password: '',
-  })
-  const [login, { isLoading }] = useLoginMutation();
   const auth = useAuth();
 
   const {
@@ -36,19 +27,11 @@ const AuthForm: React.FC = () => {
     watch,
     handleSubmit,
     formState: { errors, isValid },
-    reset,
   } = useForm<FormValues>({
     mode: 'onBlur',
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    // alert(JSON.stringify(data));
-
-    // // dispatch(setCredentials(data));
-
-    // reset();
-
-    // // navigate('/');
       const user = {
         user: {
           first_name: data.first_name,
@@ -74,43 +57,48 @@ const AuthForm: React.FC = () => {
   return auth.user ? (
     <Navigate to='/' replace={true} />
   ) :  (
-    <div>
-      <h1>Регистрация</h1>
+    <div className={styles.authFormContainer}>
+      <h1 className={styles.authFormTitle}>Регистрация</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          Имя
-          <input 
-            {...register('first_name', {
-              required: 'Поле обязательно к заполнению',
-              minLength: {
-                value: 5,
-                message: 'Имя должно содержать не менее 5 символов'
-              }
-            })}
-            placeholder='Ваше имя'
-          />
-        </label>
-        <div>{errors?.first_name && <p>{errors.first_name.message}</p>}</div>
-
-        <label>
-          Электронная почта
-          <input 
-            type='email'
-            placeholder='example@mail.ru'
-            {...register('email', {
-              required: 'Поле обязательно к заполнению',
-              pattern: /^\S+@\S+$/i,
-            })}
-          />
-        </label>
-        <div>{errors?.email && <p>{errors.email.message}</p>}</div>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm}>
+        <div>
+          <p>Имя</p>
+          <label className={styles.authFormLabel}>
+            <input 
+              className={errors?.first_name ? styles['error'] : ''}
+              {...register('first_name', {
+                required: 'Поле обязательно к заполнению',
+                minLength: {
+                  value: 5,
+                  message: 'Имя должно содержать не менее 5 символов'
+                }
+              })}
+              placeholder='Ваше имя'
+            />
+          </label>
+          <div className={styles.errorMessage}>{errors?.first_name && <p>{errors.first_name.message}</p>}</div>
+        </div>
+        <div>
+          <p>Электронная почта</p>
+          <label className={styles.authFormLabel}>
+            <input 
+              className={errors?.email ? styles['error'] : ''}
+              type='email'
+              placeholder='example@mail.ru'
+              {...register('email', {
+                required: 'Поле обязательно к заполнению',
+                pattern: /^\S+@\S+$/i,
+              })}
+            />
+          </label>
+          <div className={styles.errorMessage}>{errors?.email && <p>{errors.email.message}</p>}</div>
+        </div>
 
         <div>
-          <label>
-            Пароль
+          <p>Пароль</p>
+          <label className={styles.passwordLabel}>
             <input 
-              // type="password" 
+              className={errors?.password ? styles['error'] : ''}
               type={!isVisiblePassword ? 'password' : 'text'}
               placeholder='******'
               {...register('password', {
@@ -127,20 +115,22 @@ const AuthForm: React.FC = () => {
                 //   value: /^[a-zA-Z0-9]+$/i,  // Да, регулярка не совсем работает как было задуманно :(
                 //   message: 'Пароль должен содержать буквы и цифры'
                 // }
-              })}
+              })} 
             />
-            <button onClick={handleTogglePassword}>
+            
+            <button onClick={handleTogglePassword} className={styles.toggleShowPassword}>
               {isVisiblePassword ? <FaRegEye /> : <FaRegEyeSlash />}
             </button>
-            <div>{errors?.password && <p>{errors.password.message}</p>}</div>
           </label>
+          <div className={styles.errorMessage}>{errors?.password && <p>{errors.password.message}</p>}</div>
         </div>
 
         <div>
-          <label>
-            Подтвердите Пароль
-            <input 
+          <p>Подтвердите Пароль</p>
+          <label className={styles.passwordLabel}>
+            <input
               // type="password" 
+              className={errors?.confirm_password ? styles['error'] : ''}
               type={!isVisibleConfirmPassword ? 'password' : 'text'}
               placeholder='******'
               {...register('confirm_password', {
@@ -152,14 +142,15 @@ const AuthForm: React.FC = () => {
                 }
               })}
             />
+            <button onClick={handleToggleConfirmPassword} className={styles.toggleShowPassword}>
+              {isVisibleConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+            </button>
           </label>
-          <button onClick={handleToggleConfirmPassword}>
-            {isVisibleConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-          </button>
-          <div>{errors?.confirm_password && <p>{errors.confirm_password.message}</p>}</div>
+          
+          <div className={styles.errorMessage}>{errors?.confirm_password && <p>{errors.confirm_password.message}</p>}</div>
         </div>
 
-        <input type="submit" disabled={!isValid} value="Зарегистрироваться" />
+        <input type="submit" disabled={!isValid} value="Зарегистрироваться" className={styles.submitButton} />
       </form>
     </div>
   )
