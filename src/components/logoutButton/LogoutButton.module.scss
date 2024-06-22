@@ -8,16 +8,21 @@
   transition: 0.3s;
   cursor: pointer;
 
+  &:hover {
+    background: #ffffff;
+    color: #000000;
+  }
+  
   @media(max-width: 1000px) {
     text-align: center;
     border: none;
     border-radius: 0;
     padding: 8px 16px 8px 16px;
     width: 20px;
+
+    &:hover {
+      background: none;
+    }
   }
 
-  &:hover {
-    background: #ffffff;
-    color: #000000;
-  }
 }
