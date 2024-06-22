@@ -4,10 +4,13 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setCredentials } from '../../store/slices/authSlice';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../store/api/authApi';
 import type { LoginRequest } from '../../store/api/authApi';
 import type { User } from '../../store/api/authApi';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAuth } from '../../hooks/useAuth';
+
 
 interface FormValues {
   first_name: string;
@@ -26,6 +29,7 @@ const AuthForm: React.FC = () => {
     password: '',
   })
   const [login, { isLoading }] = useLoginMutation();
+  const auth = useAuth();
 
   const {
     register,
@@ -55,7 +59,6 @@ const AuthForm: React.FC = () => {
 
       dispatch(setCredentials(user));
       navigate('/');
-
   };
 
   const handleTogglePassword: MouseEventHandler = (e) => {
@@ -68,7 +71,9 @@ const AuthForm: React.FC = () => {
     setisVisibleConfirmPassword(!isVisibleConfirmPassword);
   }
 
-  return (
+  return auth.user ? (
+    <Navigate to='/' replace={true} />
+  ) :  (
     <div>
       <h1>Регистрация</h1>
 

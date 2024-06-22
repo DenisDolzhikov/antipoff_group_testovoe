@@ -1,6 +1,8 @@
 import styles from './UsersList.module.scss';
 import { useState } from 'react';
 import { useListUsersQuery } from '../../store/api/usersListApi';
+import { Link } from 'react-router-dom';
+import { MdArrowBack, MdArrowForward, MdBook } from 'react-icons/md';
 
 
 const UsersList: React.FC = () => {
@@ -19,18 +21,27 @@ const UsersList: React.FC = () => {
     <div>
       <h1>HomePage</h1>
 
-      {users.data.map(({ id, first_name, last_name }) => (
+      {users?.data.map(({ id, first_name, last_name }) => (
         <div key={id}>
-          {first_name} {last_name}
+          <Link to={`/users/${id}`}>
+            {first_name} {last_name}
+          </Link>
         </div>
       ))}
 
-      <button onClick={() => setPage(page - 1)} isLoading={isFetching}>
-        Previous
+      <button 
+        onClick={() => setPage((prev) => prev - 1)}
+        disabled={page === 1}
+      >
+        <MdArrowBack />
       </button>
-      <button onClick={() => setPage(page + 1)} isLoading={isFetching}>
-        Next
+      <button 
+        onClick={() => setPage((prev) => prev + 1)}
+        disabled={page === users.total_pages} 
+      >
+        <MdArrowForward />
       </button>
+      <div>{`${page} / ${users.total_pages}`}</div>
     </div>
   )
 };

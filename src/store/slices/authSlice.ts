@@ -20,6 +20,9 @@ const slice = createSlice({
     ) => {
       state.user = user;
     },
+    logout: (state) => {
+      state.user = null;
+    }
   },
 });
 
@@ -39,7 +42,7 @@ const slice = createSlice({
 //   },
 // });
 
-export const { setCredentials } = slice.actions;
+export const { setCredentials, logout } = slice.actions;
 
 export default slice.reducer;
 

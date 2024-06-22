@@ -8,7 +8,7 @@ const PrivateOutlet = () => {
   return auth.user ? (
     <Outlet />
   ) : (
-    <Navigate to='login' state={{ from: location }} />
+    <Navigate to='/signup' state={{ from: location }} />
   )
 }
 
