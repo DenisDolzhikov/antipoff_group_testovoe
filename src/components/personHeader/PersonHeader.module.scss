@@ -1,0 +1,70 @@
+.personHeader {
+  width: 100%;
+  background: #512689;
+  color: #ffffff;
+}
+
+.personHeaderWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 40px 20px;
+
+  @media (max-width: 800px) {
+    & {
+      flex-direction: column;
+    }
+  }
+}
+
+.personDescription {
+  display: flex;
+  flex-direction: column;
+}
+
+.personHeaderAvatar {
+  border-radius: 50%;
+  margin-right: 30px;
+
+  @media (max-width: 800px) {
+    & {
+      order: 1;
+      margin-right: 0;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.personHeaderTitle {
+  font-size: 64px;
+  font-weight: 400;
+  margin: 0;
+  margin-bottom: 12px;
+
+  @media (max-width: 800px) {
+    & {
+      text-align: center;
+    }
+  }
+}
+
+.personHeaderRang {
+  font-size: 32px;
+  font-weight: 400;
+  margin: 0;
+
+  @media (max-width: 800px) {
+    & {
+      text-align: center;
+    }
+  }
+}
+
+.logoutButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}

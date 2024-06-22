@@ -1,0 +1,21 @@
+.breadcrumbs {
+  margin-top: 10px;
+  // padding: 10px 20px 30px 20px;
+  
+  font-weight: 400;
+  font-size: 40px;
+  font-size: 26px;
+}
+
+.breadcrumbLink {
+  // text-decoration: 3px underline #000000;
+  text-decoration: none;
+  color: #595858;
+  transition: 0.3s;
+  cursor: pointer;
+  
+  &:hover {
+    color: #000000;
+    text-decoration: 1px underline #000000;
+  }
+}
