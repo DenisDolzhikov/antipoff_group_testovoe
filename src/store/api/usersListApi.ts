@@ -23,7 +23,7 @@ export const usersListApi = createApi({
   endpoints: (builder) => ({
     listUsers: builder.query<ListResponse<User>, number | void>({
       query: (page = 1) => `users?page=${page}`,
-      providesTags: (result, error, page) =>
+      providesTags: (result) =>
         result
           ? [
               ...result.data.map(({ id }) => ({ type: 'Users' as const, id })),

@@ -26,8 +26,6 @@ const PersonPage: React.FC = () => {
       .then(data => setUser(data));
   }, [id]);
   
-  console.log(user);
-  
   return (
     <div>
       {user && (

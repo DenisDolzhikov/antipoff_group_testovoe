@@ -38,7 +38,6 @@ const AuthForm: React.FC = () => {
           email: data.email
         }
       };
-      console.log(user);
 
       dispatch(setCredentials(user));
       navigate('/');
@@ -60,10 +59,10 @@ const AuthForm: React.FC = () => {
     <div className={styles.authFormContainer}>
       <h1 className={styles.authFormTitle}>Регистрация</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <p>Имя</p>
-          <label className={styles.authFormLabel}>
+          <label>
             <input 
               className={errors?.first_name ? styles['error'] : ''}
               {...register('first_name', {
@@ -80,7 +79,7 @@ const AuthForm: React.FC = () => {
         </div>
         <div>
           <p>Электронная почта</p>
-          <label className={styles.authFormLabel}>
+          <label>
             <input 
               className={errors?.email ? styles['error'] : ''}
               type='email'

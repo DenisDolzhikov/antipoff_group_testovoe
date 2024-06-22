@@ -1,7 +1,15 @@
 {
-  "name": "----antipoff-group",
+  "name": "Test project for Antipoff group",
+  "author": {
+    "name": "Dolzhikov Denis",
+    "email": "denis-dolzhikov-dev@yandex.ru",
+    "url": "https://denisdolzhikov.ru/"
+  },
+  "repository": {
+    "url": "https://github.com/DenisDolzhikov/antipoff_group_testovoe"
+  },
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

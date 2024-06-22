@@ -18,7 +18,7 @@ const LogoutButton: React.FC<Props> = ({ className }) => {
         className={`${styles.logoutButton} ${className}`}
         onClick={() => dispatch(logout())}
       >
-        {matches ? 'Выход' : <LogoutSVG className={styles.logoutSVG} />}
+        {matches ? 'Выход' : <LogoutSVG />}
       </button>
   )
 }

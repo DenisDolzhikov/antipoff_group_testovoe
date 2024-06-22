@@ -9,7 +9,7 @@ import LikeSVG from '../../assets/like.svg?react';
 const UsersList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  const { data: users, isLoading, isFetching } = useListUsersQuery(page);
+  const { data: users, isLoading } = useListUsersQuery(page);
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -19,7 +19,7 @@ const UsersList: React.FC = () => {
     return <div>No users...</div>
   }
 
-  const handeLike = (e) => {
+  const handeLike = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setIsLiked(!isLiked);
   }
