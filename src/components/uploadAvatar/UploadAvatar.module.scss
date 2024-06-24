@@ -1,0 +1,30 @@
+.avatarImg {
+  display: flex;
+  width: 100%;
+  height: auto;
+  transition: 0.3s;
+  opacity: 1;
+  backface-visibility: hidden;
+}
+
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.avatarContainer:hover .avatarImg {
+  opacity: 0.3;
+}
+
+.avatarContainer:hover .wrapper {
+  opacity: 1;
+}
+
+.button {
+  cursor: pointer;
+}

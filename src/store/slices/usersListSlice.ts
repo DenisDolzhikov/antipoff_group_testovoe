@@ -1,85 +1,78 @@
 // PS: Это попытка сделать пагинацию с помощью asyncThunk, выглядит нерационально, проще использовать RTK Query
 
 
+import { createSlice, PayloadAction, createAsyncThunk, UnknownAction } from '@reduxjs/toolkit';
 
-// import { createSlice, PayloadAction, createAsyncThunk, UnknownAction } from '@reduxjs/toolkit';
+interface User {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
+  isLiked: boolean;
+}
 
-// export const fetchUsers = createAsyncThunk<User[], undefined, { rejectValue: string}>(
-//   'users/fetchUsers',
-//   async function(page: number = 1, { rejectWithValue }) {
-//     const response = await fetch(`https://reqres.in/api/users?page=${page}`);
+interface UsersList {
+  list: User[];
+  loading: boolean;
+  error: string | null;
+}
 
-//     if (!response.ok) {
-//       return rejectWithValue('Server error!');
-//     }
+export const fetchUsers = createAsyncThunk<User[], undefined, { rejectValue: string}>(
+  'users/fetchUsers',
+  async function(_, { rejectWithValue }) {
+    const response = await fetch(`https://reqres.in/api/users`);
 
-//     const data = await response.json();
+    if (!response.ok) {
+      return rejectWithValue('Server error!');
+    }
 
-//     console.log(data);
+    const fetchedData = await response.json();
+    const allUsers: User[] = [];
 
-//     return data;
-//   }
-// );
+    while (true) {
+      if (!(fetchedData.page <= fetchedData.total_pages)) break;
 
-// // export const fetchUsers = createAsyncThunk<User[], undefined, { rejectValue: string}>(
-// //   'users/fetchUsers',
-// //   async function(_, { rejectWithValue }) {
-// //     const response = await fetch(`https://reqres.in/api/users`);
+      fetchedData.data.forEach((user: User) => allUsers.push(user));
+    }
 
-// //     if (!response.ok) {
-// //       return rejectWithValue('Server error!');
-// //     }
+    console.log(allUsers);
 
-// //     const data = await response.json();
+    return allUsers;
+  }
+);
 
-// //     return data;
-// //   }
-// // );
 
-// interface User {
-//   id: number;
-//   email: string;
-//   first_name: string;
-//   last_name: string;
-//   avatar: string;
-//   isLiked: boolean;
-// }
 
-// interface UsersList {
-//   list: User[];
-//   loading: boolean;
-//   error: string | null;
-// }
+const initialState: UsersList = {
+  list: [],
+  loading: false,
+  error: null,
+};
 
-// const initialState: UsersList = {
-//   list: [],
-//   loading: false,
-//   error: null,
-// };
+const usersSlice = createSlice({
+  name: 'users',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.list.push(action.payload);
+        state.loading = false;
+      })
+      .addMatcher(isError, (state, action: PayloadAction<string>) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+  }
+});
 
-// const usersSlice = createSlice({
-//   name: 'users',
-//   initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(fetchUsers.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//       })
-//       .addCase(fetchUsers.fulfilled, (state, action) => {
-//         state.list = action.payload;
-//         state.loading = false;
-//       })
-//       .addMatcher(isError, (state, action: PayloadAction<string>) => {
-//         state.error = action.payload;
-//         state.loading = false;
-//       })
-//   }
-// });
+function isError(action: UnknownAction) {
+  return action.type.endsWith('rejected');
+}
 
-// function isError(action: UnknownAction) {
-//   return action.type.endsWith('rejected');
-// }
-
-// export default usersSlice.reducer;
+export default usersSlice.reducer;

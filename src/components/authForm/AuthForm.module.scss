@@ -45,6 +45,7 @@ label {
   height: 100%;
   background: none;
   border: none;
+  cursor: pointer;
 }
 
 .submitButton {
@@ -52,6 +53,12 @@ label {
   border-radius: 8px;
   color: #ffffff;
   margin-top: 24px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background: #6e3ead;
 }
 
 .errorMessage {

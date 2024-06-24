@@ -1,15 +1,18 @@
 import styles from './UsersList.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useListUsersQuery } from '../../store/api/usersListApi';
 import { Link } from 'react-router-dom';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import LikeSVG from '../../assets/like.svg?react';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { fetchUsers } from '../../store/slices/usersListSlice';
 
 
 const UsersList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { data: users, isLoading } = useListUsersQuery(page);
+  const dispatch = useAppDispatch();
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -22,6 +25,7 @@ const UsersList: React.FC = () => {
   const handeLike = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setIsLiked(!isLiked);
+    dispatch(fetchUsers());
   }
   
   return (
