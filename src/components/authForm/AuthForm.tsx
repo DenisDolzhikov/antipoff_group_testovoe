@@ -7,7 +7,6 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
-
 interface FormValues {
   first_name: string;
   email: string;
@@ -138,7 +137,15 @@ const AuthForm: React.FC = () => {
                   if (watch('password') != val) {
                     return 'Ваши пароли не совпадают'
                   }
-                }
+                },
+                minLength: {
+                  value: 6,
+                  message: 'Длинна пароля не менее 6 символов',
+                },
+                maxLength: {
+                  value: 20,
+                  message: 'Длинна пароля не более 20 символов',
+                },
               })}
             />
             <button onClick={handleToggleConfirmPassword} className={styles.toggleShowPassword}>
