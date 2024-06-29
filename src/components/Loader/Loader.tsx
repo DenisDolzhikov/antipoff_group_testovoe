@@ -1,6 +1,6 @@
 const Loader: React.FC = () => {
   return (
-    <div>Loading...</div>
+    <div>Loading... Loading...</div>
   )
 };
 

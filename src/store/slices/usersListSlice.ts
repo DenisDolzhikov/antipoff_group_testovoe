@@ -9,7 +9,6 @@ interface User {
   first_name: string;
   last_name: string;
   avatar: string;
-  isLiked: boolean;
 }
 
 interface UsersList {
@@ -28,6 +27,10 @@ export const fetchUsers = createAsyncThunk<User[], undefined, { rejectValue: str
     }
 
     const fetchedData = await response.json();
+
+    console.log(fetchedData);
+    
+
     const allUsers: User[] = [];
 
     while (true) {
@@ -62,6 +65,8 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
         state.list.push(action.payload);
+        console.log(state.list);
+        
         state.loading = false;
       })
       .addMatcher(isError, (state, action: PayloadAction<string>) => {

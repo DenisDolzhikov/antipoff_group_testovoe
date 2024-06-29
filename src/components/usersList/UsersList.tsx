@@ -25,7 +25,7 @@ const UsersList: React.FC = () => {
   const handeLike = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setIsLiked(!isLiked);
-    dispatch(fetchUsers());
+    // dispatch(fetchUsers());
   }
   
   return (
